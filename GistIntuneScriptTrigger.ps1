@@ -1,6 +1,6 @@
 $global:HostVar = $Host
 $Branch = "dev"
-$Version = "v0.0.9"
+$Version = "v0.1.0"
 $Title = @"
 GIST - Gist Intune Script Trigger $Version ($Branch) by https://x.com/MrWyss 
 Source: https://github.com/MrWyss-MSFT/gist
@@ -386,6 +386,6 @@ else {
     do {
         $Menu.DrawMenu()
     }
-    until ($myobj = $Menu.AskUser())
-    Invoke-Gist $myobj
+    until ($SelectedGist = $Menu.AskUser())
+    Invoke-Gist $SelectedGist
 }
