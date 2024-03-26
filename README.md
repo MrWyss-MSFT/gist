@@ -1,4 +1,5 @@
 # GIST - Gist Intune Script Trigger
+
 <p align="center">
   <img alt="ai Intune Device Classification logo" src="_res/logo/gist_logo.png" width="400">
 </p>
@@ -30,6 +31,12 @@ iwr gist.ittips.ch | iex
 iwr gist.ittips.ch/dev | iex
 ```
 
+#### Direct script call with gist number
+
+```powershell
+iwr gist.ittips.ch/5 | iex
+```
+
 ## Contribute
 
 If you are the **author** of a script that you would like to add, create an issue [New script / gist](https://github.com/MrWyss-MSFT/gist/issues/new?assignees=&labels=new+script&projects=&template=new-script.md&title=New+Script%3A+%5BYourScriptName%5Dissues/new/choose). If the script passes the **script requirements**, I will add the specific **gist id** and **revision id** to the menu.
@@ -38,7 +45,7 @@ If you are the **author** of a script that you would like to add, create an issu
 
 - Script is **not harmful**
 - Script **does not** change system settings
-- Script **does not** depend on external components (e.g. Modules, other scripts, radom content from the internet)
+- Script **does not** depend on external components (e.g. Modules, other scripts, random content from the internet)
 - Does **not require parameters** (as for now)
 
 Any other suggestions, issues and such:  [Issue](https://github.com/MrWyss-MSFT/gist/issues/new/choose)
