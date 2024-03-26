@@ -4,7 +4,7 @@ $Version = "v0.1.0"
 $Title = @"
 GIST - Gist Intune Script Trigger $Version ($Branch) by https://x.com/MrWyss 
 Source: https://github.com/MrWyss-MSFT/gist
-`u{1F195}: Entries: BITS-Monitor & DO-Monitor thx to jonasatgit
+`u{1F195}: Entries: BITS-Monitor, Get-PerfCounterList and DO-Monitor thx to Jonasatgit
 "@
 
 $GistCatalog = @(
