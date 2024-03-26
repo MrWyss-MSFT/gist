@@ -68,10 +68,18 @@ $GistCatalog = @(
         Name        = "Get-PerfCounterList"
         Category    = "Windows"
         Url         = "https://raw.githubusercontent.com/jonasatgit/scriptrepo/03e54bd2a07ee8205831ee9698a4c7bf21317f52/General/Get-PerfCounterList.ps1"
-        Description = "Script to monitor Delivery Optimization jobs. Will refresh every two seconds"
+        Description = "Script to list all available performance counters via GridView"
         Author      = "Jonasatgit"
         Elevation   = $false
     }
+    #[ordered] @{
+    #    Name        = ""
+    #    Category    = ""
+    #    Url         = ""
+    #    Description = ""
+    #    Author      = ""
+    #    Elevation   = $false | $true
+    #}
 )
 
 # Class to create a console menu
