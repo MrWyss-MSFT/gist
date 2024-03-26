@@ -1,6 +1,6 @@
 $global:HostVar = $Host
 $Branch = "dev"
-$Version = "v0.0.8"
+$Version = "v0.0.9"
 $Title = @"
 GIST - Gist Intune Script Trigger $Version ($Branch) by https://x.com/MrWyss 
 Source: https://github.com/MrWyss-MSFT/gist
