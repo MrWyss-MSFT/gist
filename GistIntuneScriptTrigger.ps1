@@ -51,7 +51,7 @@ $GistCatalog = @(
     [ordered] @{
         Name        = "BITS-Monitor"
         Category    = "Windows"
-        Url         = "https://raw.githubusercontent.com/jonasatgit/scriptrepo/db8ef5947043535acf6118ed0cd9e9aa82c2ec23/General/BITS-Monitor.ps1"
+        Url         = "https://raw.githubusercontent.com/jonasatgit/scriptrepo/03e54bd2a07ee8205831ee9698a4c7bf21317f52/General/BITS-Monitor.ps1"
         Description = "Script to monitor BITS transfer jobs. Will refresh every five seconds"
         Author      = "Jonasatgit"
         Elevation   = $true
@@ -64,7 +64,14 @@ $GistCatalog = @(
         Author      = "Jonasatgit"
         Elevation   = $true
     }
-
+    [ordered] @{
+        Name        = "Get-PerfCounterList"
+        Category    = "Windows"
+        Url         = "https://raw.githubusercontent.com/jonasatgit/scriptrepo/03e54bd2a07ee8205831ee9698a4c7bf21317f52/General/Get-PerfCounterList.ps1"
+        Description = "Script to monitor Delivery Optimization jobs. Will refresh every two seconds"
+        Author      = "Jonasatgit"
+        Elevation   = $false
+    }
 )
 
 # Class to create a console menu
@@ -77,7 +84,6 @@ Class ConsoleMenu {
     [switch]$StopIfWrongWidth
     [bool]$cleared = $false
     [string]$selection = -1
-    [ScriptBlock]$CallFunction
 
     # Default constructor
     ConsoleMenu() { 
@@ -319,16 +325,6 @@ Class ConsoleMenu {
         }
         return $SelectedObject
     }
-    # Present the menu until the user selects a valid option, if a function is defined, call it with the selected object
-    [void] Show() {
-        do {
-            $this.DrawMenu()
-        }
-        until ($myobj = $this.AskUser())
-        if ($this.CallFunction) {
-            & $this.CallFunction $myobj
-        }
-    }
 }
 
 # Function to download and run the selected script
@@ -370,7 +366,6 @@ $Menu = [ConsoleMenu]@{
     #MaxStringLength   = 50
     #AddDevideLines    = $true
     #StopIfWrongWidth  = $true
-    CallFunction      = ${function:Invoke-Gist}
 }
 
 # Check if the script is called with a script number
@@ -378,7 +373,11 @@ if ($($MyInvocation.MyCommand) -match 'gist\.ittips\.ch/(?:test/|dev/)?(\d+)') {
     [int]$paramScriptNumber = $($matches[1])
     Invoke-Gist -ScriptObject $GistCatalog[$paramScriptNumber - 1] -NoConfirm
 }
-# Show the menu
+# Show the menu and ask the user for input and run the selected script
 else {
-    $Menu.Show()
+    do {
+        $Menu.DrawMenu()
+    }
+    until ($myobj = $Menu.AskUser())
+    Invoke-Gist $myobj
 }
