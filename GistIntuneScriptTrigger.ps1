@@ -1,10 +1,10 @@
 $global:HostVar = $Host
 $Branch = "dev"
-$Version = "v0.1.0"
+$Version = "v0.1.1"
 $Title = @"
 GIST - Gist Intune Script Trigger $Version ($Branch) by https://x.com/MrWyss 
 Source: https://github.com/MrWyss-MSFT/gist
-`u{1F195}: Entries: BITS-Monitor, Get-PerfCounterList and DO-Monitor thx to Jonasatgit
+`u{1F195}: Update: New-IntuneRegistryFavorites - MDMWins Favorite Key
 "@
 
 $GistCatalog = @(
@@ -43,7 +43,7 @@ $GistCatalog = @(
     [ordered] @{
         Name        = "New-IntuneRegistryFavorites"
         Category    = "Intune"
-        Url         = "https://gist.githubusercontent.com/MrWyss-MSFT/500b2270b0b23b2fdc9ddc78092c355d/raw/9e3237f26674e2b0ad69b585849797fb731da0f2/New-IntuneRegistryFavorites.ps1"
+        Url         = "https://gist.githubusercontent.com/MrWyss-MSFT/500b2270b0b23b2fdc9ddc78092c355d/raw/ed9ce7714b335cdb52c2de97be4842dcbd7db359/New-IntuneRegistryFavorites.ps1"
         Description = "Create Registry Favorites for Intune and Autopilot"
         Author      = "MrWyss-MSFT"
         Elevation   = $false
