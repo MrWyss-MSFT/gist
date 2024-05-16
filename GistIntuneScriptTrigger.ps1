@@ -4,6 +4,7 @@ $Version = "v0.1.0"
 $Title = @"
 GIST - Gist Intune Script Trigger $Version ($Branch) by https://x.com/MrWyss 
 Source: https://github.com/MrWyss-MSFT/gist
+`u{1F195}: Replaced DO-Monitor with itwaman's version
 `u{1F195}: Entries: BITS-Monitor, Get-PerfCounterList and DO-Monitor thx to Jonasatgit
 "@
 
@@ -43,7 +44,7 @@ $GistCatalog = @(
     [ordered] @{
         Name        = "New-IntuneRegistryFavorites"
         Category    = "Intune"
-        Url         = "https://gist.githubusercontent.com/MrWyss-MSFT/500b2270b0b23b2fdc9ddc78092c355d/raw/9e3237f26674e2b0ad69b585849797fb731da0f2/New-IntuneRegistryFavorites.ps1"
+        Url         = "https://gist.githubusercontent.com/MrWyss-MSFT/500b2270b0b23b2fdc9ddc78092c355d/raw/ed9ce7714b335cdb52c2de97be4842dcbd7db359/New-IntuneRegistryFavorites.ps1"
         Description = "Create Registry Favorites for Intune and Autopilot"
         Author      = "MrWyss-MSFT"
         Elevation   = $false
@@ -300,6 +301,13 @@ Class ConsoleMenu {
                 #Write-Warning "Or exclude some properties via '-ExcludeProperties' parameter of 'New-ConsoleMenu' cmdlet in the script"
             }
         }
+    
+        # test if the selection is a number
+        # test if selection is between 1 and the number of options
+        if ($this.selection -match '^\d+$' -and $this.selection -ge 1 -and [int]$this.selection -le $this.Options.Count) {
+            Clear-Host
+            $SelectedObject = $this.Options[[int]$this.selection - 1]                
+        }
         else {
             foreach ($line in $consoleMenu) {
                 Write-Host $line
@@ -335,6 +343,7 @@ Class ConsoleMenu {
     }
 }
 
+# Function to download and run the selected script
 # Function to download and run the selected script
 Function Invoke-Gist {
     param (
@@ -377,12 +386,28 @@ $Menu = [ConsoleMenu]@{
 }
 
 # Check if the script is called with a script number
+$Menu = [ConsoleMenu]@{
+    Title             = $Title
+    Options           = $GistCatalog
+    ExcludeProperties = "Url"#, "Description" #, "Url", "Author"  # Title requries some width therefore description shouldn't be excluded
+    #MaxStringLength   = 50
+    #AddDevideLines    = $true
+    #StopIfWrongWidth  = $true
+}
+
+# Check if the script is called with a script number
 if ($($MyInvocation.MyCommand) -match 'gist\.ittips\.ch/(?:test/|dev/)?(\d+)') {
     [int]$paramScriptNumber = $($matches[1])
     Invoke-Gist -ScriptObject $GistCatalog[$paramScriptNumber - 1] -NoConfirm
 }
 # Show the menu and ask the user for input and run the selected script
+# Show the menu and ask the user for input and run the selected script
 else {
+    do {
+        $Menu.DrawMenu()
+    }
+    until ($SelectedGist = $Menu.AskUser())
+    Invoke-Gist $SelectedGist
     do {
         $Menu.DrawMenu()
     }
