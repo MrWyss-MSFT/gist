@@ -323,7 +323,7 @@ Class ConsoleMenu {
     
         # test if the selection is a number
         # test if selection is between 1 and the number of options
-        if ($this.selection -match '^\d+$' -and $this.selection -ge 1 -and $this.selection -le $this.Options.Count) {
+        if ($this.selection -match '^\d+$' -and $this.selection -ge 1 -and [int]$this.selection -le $this.Options.Count) {
             Clear-Host
             $SelectedObject = $this.Options[[int]$this.selection - 1]                
         }
