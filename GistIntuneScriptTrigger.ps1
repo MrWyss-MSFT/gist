@@ -4,7 +4,7 @@ $Version = "v0.1.2"
 $Title = @"
 GIST - Gist Intune Script Trigger $Version ($Branch) by https://x.com/MrWyss 
 Source: https://github.com/MrWyss-MSFT/gist
-`u{1F195}: Replaced DO-Monitor with itwaman's version
+`u{1F195}: Replaced DO-Monitor with itwaman's version 
 "@
 
 $GistCatalog = @(
