@@ -59,10 +59,10 @@ $GistCatalog = @(
     [ordered] @{
         Name        = "DO-Monitor"
         Category    = "Windows"
-        Url         = "https://raw.githubusercontent.com/jonasatgit/scriptrepo/e2f18b378d4aefea32b649be371d87351366136b/General/DO-Monitor.ps1"
+        Url         = "https://raw.githubusercontent.com/itwaman/myPSscripts/e56133ad74b4ec49e94ecfcfdc20dabe67aed410/DOStatusMonitor.ps1"
         Description = "Script to monitor Delivery Optimization jobs. Will refresh every two seconds"
-        Author      = "Jonasatgit"
-        Elevation   = $true
+        Author      = "itwaman"
+        Elevation   = $false
     }
     [ordered] @{
         Name        = "Get-PerfCounterList"
