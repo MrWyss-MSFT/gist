@@ -1,6 +1,6 @@
 $global:HostVar = $Host
 $Branch = "main"
-$Version = "v0.1.0"
+$Version = "v0.1.2"
 $Title = @"
 GIST - Gist Intune Script Trigger $Version ($Branch) by https://x.com/MrWyss 
 Source: https://github.com/MrWyss-MSFT/gist
@@ -59,10 +59,10 @@ $GistCatalog = @(
     [ordered] @{
         Name        = "DO-Monitor"
         Category    = "Windows"
-        Url         = "https://raw.githubusercontent.com/jonasatgit/scriptrepo/e2f18b378d4aefea32b649be371d87351366136b/General/DO-Monitor.ps1"
+        Url         = "https://raw.githubusercontent.com/itwaman/myPSscripts/e56133ad74b4ec49e94ecfcfdc20dabe67aed410/DOStatusMonitor.ps1"
         Description = "Script to monitor Delivery Optimization jobs. Will refresh every two seconds"
-        Author      = "Jonasatgit"
-        Elevation   = $true
+        Author      = "itwaman"
+        Elevation   = $false
     }
     [ordered] @{
         Name        = "Get-PerfCounterList"
@@ -300,13 +300,6 @@ Class ConsoleMenu {
                 #Write-Warning "Or exclude some properties via '-ExcludeProperties' parameter of 'New-ConsoleMenu' cmdlet in the script"
             }
         }
-    
-        # test if the selection is a number
-        # test if selection is between 1 and the number of options
-        if ($this.selection -match '^\d+$' -and $this.selection -ge 1 -and [int]$this.selection -le $this.Options.Count) {
-            Clear-Host
-            $SelectedObject = $this.Options[[int]$this.selection - 1]                
-        }
         else {
             foreach ($line in $consoleMenu) {
                 Write-Host $line
@@ -330,7 +323,7 @@ Class ConsoleMenu {
     
         # test if the selection is a number
         # test if selection is between 1 and the number of options
-        if ($this.selection -match '^\d+$' -and $this.selection -ge 1 -and $this.selection -le $this.Options.Count) {
+        if ($this.selection -match '^\d+$' -and $this.selection -ge 1 -and [int]$this.selection -le $this.Options.Count) {
             Clear-Host
             $SelectedObject = $this.Options[[int]$this.selection - 1]                
         }
@@ -342,7 +335,6 @@ Class ConsoleMenu {
     }
 }
 
-# Function to download and run the selected script
 # Function to download and run the selected script
 Function Invoke-Gist {
     param (
@@ -385,28 +377,12 @@ $Menu = [ConsoleMenu]@{
 }
 
 # Check if the script is called with a script number
-$Menu = [ConsoleMenu]@{
-    Title             = $Title
-    Options           = $GistCatalog
-    ExcludeProperties = "Url"#, "Description" #, "Url", "Author"  # Title requries some width therefore description shouldn't be excluded
-    #MaxStringLength   = 50
-    #AddDevideLines    = $true
-    #StopIfWrongWidth  = $true
-}
-
-# Check if the script is called with a script number
 if ($($MyInvocation.MyCommand) -match 'gist\.ittips\.ch/(?:test/|dev/)?(\d+)') {
     [int]$paramScriptNumber = $($matches[1])
     Invoke-Gist -ScriptObject $GistCatalog[$paramScriptNumber - 1] -NoConfirm
 }
 # Show the menu and ask the user for input and run the selected script
-# Show the menu and ask the user for input and run the selected script
 else {
-    do {
-        $Menu.DrawMenu()
-    }
-    until ($SelectedGist = $Menu.AskUser())
-    Invoke-Gist $SelectedGist
     do {
         $Menu.DrawMenu()
     }
