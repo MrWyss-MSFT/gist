@@ -76,8 +76,8 @@ $GistCatalog = @(
         Name        = "Set-WindowsCorporateIdentifiers"
         Category    = "Intune"
         Url         = "https://gist.githubusercontent.com/MrWyss-MSFT/a9401456c32a2ccd3cd1f09b5f2d9a2c/raw/5a54f5825f5acbc8ab0b49d2741de314bc0b9b24/Set-WindowsCorporateIdentifiers.ps1"
-        Description = "This script will upload the Windows Corporate Identifiers for the device to Microsoft Intune"
-        Author      = "mrwyss-msft"
+        Description = "This script will upload the Windows Corporate Identifiers for the device to Intune"
+        Author      = "MrWyss-MSFT"
         Elevation   = $false
     }
     #[ordered] @{
