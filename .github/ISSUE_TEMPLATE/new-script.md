@@ -9,12 +9,18 @@ assignees: ''
 
 ### Script Details
 
+We need some details, such as Author, URL, Category, Elevation, Short Description and optional More Info Link
+
 #### Author
 
 Full Name / Github Handle
 
 #### URL
+
+*Gist*
 https://gist.githubusercontent.com/[YourID]/[GistID]/raw/[RevID]/[ScriptName.ps1]
+or *Repo*
+https://raw.githubusercontent.com/[YourID]/[YourRepo]/[CommitSHA]/[YourFolder/][Yourscript].ps1
 
 #### Category
 
@@ -25,6 +31,8 @@ Autopilot | CoMgmt | Intune | Windows
 Yes | No
 
 #### Short description (max 150 characters)
+
+#### More info link [optional]
 
 ### Script requirements
 
