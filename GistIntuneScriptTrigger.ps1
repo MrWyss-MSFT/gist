@@ -1,10 +1,10 @@
 $global:HostVar = $Host
 $Branch = "dev"
-$Version = "v0.1.2"
+$Version = "v0.1.3"
 $Title = @"
 GIST - Gist Intune Script Trigger $Version ($Branch) by https://x.com/MrWyss 
 Source: https://github.com/MrWyss-MSFT/gist
-`u{1F195}: Replaced DO-Monitor with itwaman's version 
+`u{1F195}: Added Set-WindowsCorporateIdentifiers
 "@
 
 $GistCatalog = @(
@@ -70,6 +70,14 @@ $GistCatalog = @(
         Url         = "https://raw.githubusercontent.com/jonasatgit/scriptrepo/03e54bd2a07ee8205831ee9698a4c7bf21317f52/General/Get-PerfCounterList.ps1"
         Description = "Script to list all available performance counters via GridView"
         Author      = "Jonasatgit"
+        Elevation   = $false
+    }
+    [ordered] @{
+        Name        = "Set-WindowsCorporateIdentifiers"
+        Category    = "Intune"
+        Url         = "https://gist.githubusercontent.com/MrWyss-MSFT/a9401456c32a2ccd3cd1f09b5f2d9a2c/raw/5a54f5825f5acbc8ab0b49d2741de314bc0b9b24/Set-WindowsCorporateIdentifiers.ps1"
+        Description = "This script will upload the Windows Corporate Identifiers for the device to Microsoft Intune"
+        Author      = "mrwyss-msft"
         Elevation   = $false
     }
     #[ordered] @{
