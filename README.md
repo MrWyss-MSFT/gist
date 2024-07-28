@@ -1,4 +1,5 @@
 # GIST - Gist Intune Script Trigger
+![GitHub Downloads (specific asset, all releases)](https://img.shields.io/github/downloads/MrWyss-MSFT/gist/GistIntuneScriptTrigger.ps1)
 
 <p align="center">
   <img alt="ai Intune Device Classification logo" src="_res/logo/gist_logo.png" width="400">
