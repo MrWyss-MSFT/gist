@@ -1,17 +1,17 @@
 $global:HostVar = $Host
 $Branch = "main"
-$Version = "v0.1.3"
+$Version = "v0.1.4"
 $Title = @"
 GIST - Gist Intune Script Trigger $Version ($Branch) by https://x.com/MrWyss 
 Source: https://github.com/MrWyss-MSFT/gist
-`u{1F195}: Added Set-WindowsCorporateIdentifiers
+`u{1F195}: Updated Get-Win32AppsOrder and Get-AutopilotAndESPProgress.ps1 to accommodate the log file name changes
 "@
 
 $GistCatalog = @(
     [ordered]@{
         Name        = "Get-Win32AppsOrder"
         Category    = "Intune"
-        Url         = "https://gist.githubusercontent.com/MrWyss-MSFT/c52f0a4567cba24e9ac8a38416a05bac/raw/cffeca3256e5c4c31fdd8b1cbaa8b86ced9833f5/Get-Win32AppsOrder.ps1"
+        Url         = "https://gist.githubusercontent.com/MrWyss-MSFT/c52f0a4567cba24e9ac8a38416a05bac/raw/d0f5f0e7c03f1607c193b0b4976296d3d34f5b05/Get-Win32AppsOrder.ps1"
         Description = "Reads the IntuneManagementExtension.log and returns a ordered list of the Win32Apps"
         Author      = "MrWyss-MSFT"
         Elevation   = $false
@@ -27,7 +27,7 @@ $GistCatalog = @(
     [ordered] @{
         Name        = "Get-AutopilotAndESPProgress"
         Category    = "Autopilot"
-        Url         = "https://gist.githubusercontent.com/MrWyss-MSFT/d511d655f55762233a1d442c24d584f6/raw/6a508ad8ca7f7f5206365f699b9a8c25a01b2dd5/Get-AutopilotAndESPProgress.ps1"
+        Url         = "https://gist.githubusercontent.com/MrWyss-MSFT/d511d655f55762233a1d442c24d584f6/raw/da47f0c6c31708ec7f83cd0d9188a7fe77116877/Get-AutopilotAndESPProgress.ps1"
         Description = "Script to view the Autopilot and ESP Progress"
         Author      = "MrWyss-MSFT"
         Elevation   = $false
