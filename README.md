@@ -4,6 +4,10 @@
   <img alt="ai Intune Device Classification logo" src="_res/logo/gist_logo.png" width="400">
 </p>
 
+<p align="center">
+  <img alt="ai Intune Device Classification logo" src="_res/menu_screenshot.png">
+</p>
+
 ---
 
 ***<p style="text-align: center;">« Gist Intune Script Trigger, a recursive acronym if you get the gist of it »</p>***
