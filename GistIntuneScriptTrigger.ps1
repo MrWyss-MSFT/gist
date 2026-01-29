@@ -4,7 +4,7 @@ $Version = "v0.1.4"
 $Title = @"
 GIST - Gist Intune Script Trigger $Version ($Branch) by https://x.com/MrWyss 
 Source: https://github.com/MrWyss-MSFT/gist
-`u{1F195}: Updated Get-Win32AppsOrder and Get-AutopilotAndESPProgress.ps1 to accommodate the log file name changes
+`u{1F195} 2026-01-16: Added - Nr.10 - Show-SecureBootCerts
 "@
 
 $GistCatalog = @(
