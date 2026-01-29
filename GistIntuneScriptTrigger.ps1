@@ -84,7 +84,7 @@ $GistCatalog = @(
         Name        = "Show-SecureBootCerts"
         Category    = "Intune"
         Url         = "https://raw.githubusercontent.com/MrWyss-MSFT/SecureBootCerts/4e7d38a7f5a4c79efd9757ad815e22fdd82b11e0/Show-SecureBootCerts.ps1"
-        Description = "This PowerShell script retrieves and displays information about Secure Boot certificates and related data on a Windows system"
+        Description = "This script retrieves and displays information about Secure Boot certificates and related data"
         Author      = "MrWyss-MSFT"
         Elevation   = $true
     }
