@@ -12,7 +12,7 @@ $GistCatalog = @(
         Name        = "Get-Win32AppsOrder"
         Category    = "Intune"
         Url         = "https://gist.githubusercontent.com/MrWyss-MSFT/c52f0a4567cba24e9ac8a38416a05bac/raw/d0f5f0e7c03f1607c193b0b4976296d3d34f5b05/Get-Win32AppsOrder.ps1"
-        Description = "Reads the IntuneManagementExtension.log and returns a ordered list of the Win32Apps"
+        Description = "Reads the IntuneManagementExtension.log and returns a list of Win32Apps"
         Author      = "MrWyss-MSFT"
         Elevation   = $false
     }
@@ -28,7 +28,7 @@ $GistCatalog = @(
         Name        = "Get-AutopilotAndESPProgress"
         Category    = "Autopilot"
         Url         = "https://gist.githubusercontent.com/MrWyss-MSFT/d511d655f55762233a1d442c24d584f6/raw/da47f0c6c31708ec7f83cd0d9188a7fe77116877/Get-AutopilotAndESPProgress.ps1"
-        Description = "Script to view the Autopilot and ESP Progress"
+        Description = "View the Autopilot and ESP Progress"
         Author      = "MrWyss-MSFT"
         Elevation   = $false
     }
@@ -52,7 +52,7 @@ $GistCatalog = @(
         Name        = "BITS-Monitor"
         Category    = "Windows"
         Url         = "https://raw.githubusercontent.com/jonasatgit/scriptrepo/03e54bd2a07ee8205831ee9698a4c7bf21317f52/General/BITS-Monitor.ps1"
-        Description = "Script to monitor BITS transfer jobs. Will refresh every five seconds"
+        Description = "Monitor BITS transfer jobs. Will refresh every five seconds"
         Author      = "Jonasatgit"
         Elevation   = $true
     }
@@ -60,7 +60,7 @@ $GistCatalog = @(
         Name        = "DO-Monitor"
         Category    = "Windows"
         Url         = "https://raw.githubusercontent.com/itwaman/myPSscripts/e56133ad74b4ec49e94ecfcfdc20dabe67aed410/DOStatusMonitor.ps1"
-        Description = "Script to monitor Delivery Optimization jobs. Will refresh every two seconds"
+        Description = "Monitor Delivery Optimization jobs. Will refresh every two seconds"
         Author      = "itwaman"
         Elevation   = $false
     }
@@ -76,7 +76,7 @@ $GistCatalog = @(
         Name        = "Set-WindowsCorporateIdentifiers"
         Category    = "Intune"
         Url         = "https://gist.githubusercontent.com/MrWyss-MSFT/a9401456c32a2ccd3cd1f09b5f2d9a2c/raw/5a54f5825f5acbc8ab0b49d2741de314bc0b9b24/Set-WindowsCorporateIdentifiers.ps1"
-        Description = "This script will upload the Windows Corporate Identifiers for the device to Intune"
+        Description = "Upload the Windows Corporate Identifiers for the device to Intune"
         Author      = "MrWyss-MSFT"
         Elevation   = $false
     }    
@@ -84,7 +84,7 @@ $GistCatalog = @(
         Name        = "Show-SecureBootCerts"
         Category    = "Windows"
         Url         = "https://raw.githubusercontent.com/MrWyss-MSFT/SecureBootCerts/4e7d38a7f5a4c79efd9757ad815e22fdd82b11e0/Show-SecureBootCerts.ps1"
-        Description = "This script retrieves and displays information about Secure Boot certificates and related data"
+        Description = "Retrieves Secure Boot certificates and related data"
         Author      = "MrWyss-MSFT"
         Elevation   = $true
     }
