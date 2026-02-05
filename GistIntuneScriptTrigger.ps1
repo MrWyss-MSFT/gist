@@ -4,7 +4,7 @@ $Version = "v0.1.4"
 $Title = @"
 GIST - Gist Intune Script Trigger $Version ($Branch) by https://x.com/MrWyss 
 Source: https://github.com/MrWyss-MSFT/gist
-`u{1F195} 2026-02-03: Updated - Nr.10 - Show-SecureBootCerts
+`u{1F195} 2026-02-05: Updated - Nr.10 - Show-SecureBootCerts
 "@
 
 $GistCatalog = @(
@@ -83,7 +83,7 @@ $GistCatalog = @(
     [ordered] @{
         Name        = "Show-SecureBootCerts"
         Category    = "Windows"
-        Url         = "https://raw.githubusercontent.com/MrWyss-MSFT/SecureBootCerts/46161a17f12bc22c7b17c12215f526c3984ad970/Show-SecureBootCerts.ps1"
+        Url         = "https://raw.githubusercontent.com/MrWyss-MSFT/SecureBootCerts/59b850977350717c924710d22528b8c61ce65050/Show-SecureBootCerts.ps1"
         Description = "Retrieves Secure Boot certificates and related data"
         Author      = "MrWyss-MSFT"
         Elevation   = $true
