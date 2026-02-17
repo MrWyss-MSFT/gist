@@ -221,83 +221,82 @@ Class ConsoleMenu {
    
         # create the menu with the $consoleMenu array
         $consoleMenu = @()
-        $consoleMenu += "$([char]0x2554)" + "$([Char]0x2550)" * $maxWidth + "$([char]0x2557)"
+        $consoleMenu += "$([char]0x250C)" + "$([Char]0x2500)" * $maxWidth + "$([char]0x2510)"
     
         foreach ($titlePart in ($this.Title -split "\r?\n")) {
-            $consoleMenu += "$([Char]0x2551)" + " " * [Math]::Floor(($maxWidth - ($titlePart.Length + 2)) / 2) + $titlePart + " " * [Math]::Ceiling(($maxWidth - ($titlePart.Length + 2)) / 2 + 2) + "$([Char]0x2551)"    
+            $leftPad = [Math]::Floor(($maxWidth - $titlePart.Length) / 2)
+            $rightPad = $maxWidth - $titlePart.Length - $leftPad
+            $consoleMenu += "$([Char]0x2502)" + " " * $leftPad + $titlePart + " " * $rightPad + "$([Char]0x2502)"    
         }
-        $consoleMenu += "$([Char]0x2560)" + "$([Char]0x2550)" * $maxWidth + "$([Char]0x2563)"
+        $consoleMenu += "$([Char]0x251C)" + "$([Char]0x2500)" * $maxWidth + "$([Char]0x2524)"
         # now add the header using just the properties from $selectedProperties
-        $header = "$([Char]0x2551)" + " Nr" + " " * (3) + "$([Char]0x2551)"
+        $header = "$([Char]0x2502)" + " Nr" + " " * (3) + "$([Char]0x2502)"
     
         foreach ($property in $selectedProperties) {
-            $header += " " + $property + " " * ($lengths[$property] - ($property.Length - 1)) + "$([Char]0x2551)"
+            $header += " " + $property + " " * ($lengths[$property] - $property.Length) + "$([Char]0x2502)"
             # Fix if title longer than all properties
             if ($property -eq $selectedProperties[-1]) {
                 $header = $header.Substring(0, $header.Length - 1)
-                $header += " " * (($maxWidth - $header.length) + 1) + "$([Char]0x2551)"
+                $header += " " * (($maxWidth - $header.length) + 1) + "$([Char]0x2502)"
             }
         }
         $consoleMenu += $header
-        $consoleMenu += "$([Char]0x2560)" + "$([Char]0x2550)" * $maxWidth + "$([Char]0x2563)"
+        $consoleMenu += "$([Char]0x251C)" + "$([Char]0x2500)" * $maxWidth + "$([Char]0x2524)"
         # now add the items
         $i = 0
         foreach ($item in $this.Options) {
             $i++
-            $line = "$([Char]0x2551)" + " " + "$i" + " " * (5 - $i.ToString().Length) + "$([Char]0x2551)"
-            $lineEmpty = "$([Char]0x2551)" + "      " + "$([Char]0x2551)"
-            $stringAdded = $false
-            foreach ($property in $selectedProperties) {             
+            
+            # First pass: split all properties that need wrapping
+            $propertyValues = @{}
+            $maxRows = 1
+            foreach ($property in $selectedProperties) {
                 if ($this.MaxStringLength -gt 0 -and ($item.$property).Length -gt $this.MaxStringLength) {
                     [array]$strList = $this.SplitLongString($item.$property, $this.MaxStringLength)
-                    $rowCounter = 0              
-                    foreach ($string in $strList) {
-                        # we need a complete new row for the next string, so we close this one and add it to the $consoleMenu array
-                        if ($rowCounter -eq 0) {
-                            $line += " " + ($string.ToString()) + " " * ($lengths.$property - (($string.ToString()).Length - 1)) + "$([Char]0x2551)"
-                            $consoleMenu += $line
-                            $stringAdded = $true
-                        }
-                        else {
-                            # This is a new row with nothing bu the remaining string
-                            $lineEmpty += " " + ($string.ToString()) + " " * ($lengths.$property - (($string.ToString()).Length - 1)) + "$([Char]0x2551)" 
-                            $consoleMenu += $lineEmpty
-                            $stringAdded = $true
-                        }
-                        $rowCounter++
-                    }
-    
-                    # We can add some devide lines if we want
-                    if ($this.AddDevideLines) {
-                        if ($i -lt $this.Options.Count) {
-                            $consoleMenu += "$([Char]0x255F)" + "$([char]0x2500)" * $maxWidth + "$([Char]0x2562)"
-                        }
+                    $propertyValues[$property] = $strList
+                    if ($strList.Count -gt $maxRows) {
+                        $maxRows = $strList.Count
                     }
                 }
                 else {
-                    $line += " " + ($item.$property.ToString()) + " " * ($lengths.$property - (($item.$property.ToString()).Length - 1)) + "$([Char]0x2551)"
-                    $lineEmpty += "  " + " " * ($lengths.$property) + "$([Char]0x2551)"
-                    # Fix if title longer than all properties
-                    if ($property -eq $selectedProperties[-1]) {
-                        $line = $line.Substring(0, $line.Length - 1)
-                        $line += " " * (($maxWidth - $line.length) + 1) + "$([Char]0x2551)"
-                    }
-                    #$consoleMenu += $line
+                    $propertyValues[$property] = @($item.$property.ToString())
                 }
             }
-    
-            # if the string was not added, we add it here this is typically the case if the string is not longer than $MaxStringLength
-            if (-not $stringAdded) {
-                $consoleMenu += $line
-    
-                if ($this.AddDevideLines) {
-                    if ($i -lt $this.Options.Count) {
-                        $consoleMenu += "$([Char]0x255F)" + "$([char]0x2500)" * $maxWidth + "$([Char]0x2562)"
+            
+            # Second pass: build each row with all columns
+            for ($rowNum = 0; $rowNum -lt $maxRows; $rowNum++) {
+                if ($rowNum -eq 0) {
+                    $line = "$([Char]0x2502)" + " " + "$i" + " " * (5 - $i.ToString().Length) + "$([Char]0x2502)"
+                }
+                else {
+                    $line = "$([Char]0x2502)" + "      " + "$([Char]0x2502)"
+                }
+                
+                foreach ($property in $selectedProperties) {
+                    if ($rowNum -lt $propertyValues[$property].Count) {
+                        $value = $propertyValues[$property][$rowNum]
                     }
+                    else {
+                        $value = ""
+                    }
+                    $line += " " + $value + " " * ($lengths[$property] - $value.Length) + "$([Char]0x2502)"
+                }
+                
+                # Fix if title longer than all properties
+                $line = $line.Substring(0, $line.Length - 1)
+                $line += " " * (($maxWidth - $line.length) + 1) + "$([Char]0x2502)"
+                
+                $consoleMenu += $line
+            }
+
+            # Add divider lines between items
+            if ($this.AddDevideLines) {
+                if ($i -lt $this.Options.Count) {
+                    $consoleMenu += "$([Char]0x251C)" + "$([char]0x2500)" * $maxWidth + "$([Char]0x2524)"
                 }
             }
         }
-        $consoleMenu += "$([char]0x255a)" + "$([Char]0x2550)" * $maxWidth + "$([char]0x255D)"
+        $consoleMenu += "$([char]0x2514)" + "$([Char]0x2500)" * $maxWidth + "$([char]0x2518)"
         $consoleMenu += " "
       
         # test if the console window is wide enough to display the menu
@@ -386,9 +385,9 @@ Function Invoke-Gist {
 $Menu = [ConsoleMenu]@{
     Title             = $Title
     Options           = $GistCatalog
-    ExcludeProperties = "Url"#, "Description" #, "Url", "Author"  # Title requries some width therefore description shouldn't be excluded
-    #MaxStringLength   = 50
-    #AddDevideLines    = $true
+    ExcludeProperties = "Url"  # Optimize for 120-char width
+    MaxStringLength   = 35  # Wrap long descriptions to fit 120 chars
+    AddDevideLines    = $true  # Visual separation between items
     #StopIfWrongWidth  = $true
 }
 
