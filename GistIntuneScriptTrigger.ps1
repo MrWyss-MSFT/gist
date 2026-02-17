@@ -1,10 +1,20 @@
 $global:HostVar = $Host
 $Branch = "main"
-$Version = "v0.1.5"
+$Version = "v0.1.6"
 $Title = @"
-GIST - Gist Intune Script Trigger $Version ($Branch) by https://x.com/MrWyss 
+ ######\  ######\  ######\ ########\                             
+##  __##\ \_##  _|##  __##\\__##  __|                            
+## /  \__|  ## |  ## /  \__|  ## |                               
+## |####\   ## |  \######\    ## |                               
+## |\_## |  ## |   \____##\   ## |                               
+## |  ## |  ## |  ##\   ## |  ## |                               
+\######  |######\ \######  |  ## |                               
+ \______/ \______| \______/   \__|   - Gist Intune Script Trigger
+
+Version: $Version ($Branch) by https://x.com/MrWyss 
 Source: https://github.com/MrWyss-MSFT/gist
-`u{1F195} 2026-02-06: Updated - Nr.10 - Show-SecureBootCerts
+
+2026-02-06: [NEW] Updated visual style of the menu
 "@
 
 $GistCatalog = @(
@@ -209,26 +219,99 @@ Class ConsoleMenu {
         }
         return $lengths
     }
+    # Helper function to build horizontal divider lines with proper junctions
+    [string] BuildDividerLine([hashtable]$lengths, [array]$selectedProperties, [string]$LineType, [int]$maxWidth) {
+        # LineType: "top", "header", "middle", "bottom", "titleEnd"
+        $leftChar = switch ($LineType) {
+            "top"      { [char]0x250C }  # ┌
+            "titleEnd" { [char]0x251C }  # ├
+            "header"   { [char]0x251C }  # ├
+            "middle"   { [char]0x251C }  # ├
+            "bottom"   { [char]0x2514 }  # └
+        }
+        $rightChar = switch ($LineType) {
+            "top"      { [char]0x2510 }  # ┐
+            "titleEnd" { [char]0x2524 }  # ┤
+            "header"   { [char]0x2524 }  # ┤
+            "middle"   { [char]0x2524 }  # ┤
+            "bottom"   { [char]0x2518 }  # ┘
+        }
+        $junctionChar = switch ($LineType) {
+            "top"      { [char]0x252C }  # ┬
+            "titleEnd" { [char]0x252C }  # ┬ (connects title to columns)
+            "header"   { [char]0x253C }  # ┼
+            "middle"   { [char]0x253C }  # ┼
+            "bottom"   { [char]0x2534 }  # ┴
+        }
+        
+        $line = "$leftChar"
+        # Nr column: width 6 (" Nr" + 3 spaces)
+        $line += "$([char]0x2500)" * 6
+        $line += "$junctionChar"
+        
+        # Add each property column
+        foreach ($property in $selectedProperties) {
+            if ($property -eq $selectedProperties[-1]) {
+                # Last column: pad to maxWidth to match header/data row padding
+                # Header does: remove separator, add ($maxWidth - length) + 1 spaces, add separator
+                # So we need: ($maxWidth - $line.Length) + 1 dashes (no final junction)
+                $remainingWidth = ($maxWidth - $line.Length) + 1
+                $line += "$([char]0x2500)" * $remainingWidth
+            } else {
+                # Each column: 1 space + property content length
+                $line += "$([char]0x2500)" * ($lengths[$property] + 1)
+                $line += "$junctionChar"
+            }
+        }
+        
+        $line += "$rightChar"
+        return $line
+    }
+    # Helper function to build simple divider line (no junctions, for title box)
+    [string] BuildSimpleDividerLine([int]$width, [string]$LineType) {
+        # LineType: "top", "bottom"
+        $leftChar = if ($LineType -eq "top") { [char]0x250C } else { [char]0x251C }  # ┌ or ├
+        $rightChar = if ($LineType -eq "top") { [char]0x2510 } else { [char]0x2524 }  # ┐ or ┤
+        
+        return "$leftChar" + "$([char]0x2500)" * $width + "$rightChar"
+    }
     # Draws the menu
-    [void] DrawMenu() {     
+    [void] DrawMenu() {
+        Clear-Host  # Clear screen for terminal resizing
+        
         [array]$selectedProperties = $this.SelectedProperties()
         [hashtable] $lengths = $this.GetLengths()
-        # if $MaxStringLength is set, we need to limit the maximum length of each string in $lengths
-        if ($this.MaxStringLength -gt 0) {
-            $lengths = $this.LimitStrings($lengths, $selectedProperties, $this.MaxStringLength)
+        
+        # Get current terminal width and calculate dynamic MaxStringLength
+        $terminalWidth = $global:HostVar.UI.RawUI.BufferSize.Width
+        if ($terminalWidth -le 0) { $terminalWidth = 120 }  # Fallback if can't detect
+        
+        # Calculate space used by fixed columns (Nr=6, Name=32, Category=10, Author=12, Elevation=15, borders/spaces=18)
+        # Total fixed: ~93 characters. Remaining space goes to Description column
+        $fixedColumnsWidth = 93
+        $availableForDescription = $terminalWidth - $fixedColumnsWidth - 4  # 4 for some margin
+        
+        # Use dynamic description width, with min/max bounds
+        $dynamicMaxLength = [Math]::Max(20, [Math]::Min($availableForDescription, 100))
+        
+        # Apply dynamic wrapping if MaxStringLength is set, otherwise use calculated value
+        $effectiveMaxLength = if ($this.MaxStringLength -gt 0) { $dynamicMaxLength } else { 0 }
+        
+        if ($effectiveMaxLength -gt 0) {
+            $lengths = $this.LimitStrings($lengths, $selectedProperties, $effectiveMaxLength)
         }
         $maxWidth = $this.GetMaxWidth($lengths, $selectedProperties)
    
         # create the menu with the $consoleMenu array
         $consoleMenu = @()
-        $consoleMenu += "$([char]0x250C)" + "$([Char]0x2500)" * $maxWidth + "$([char]0x2510)"
+        $consoleMenu += $this.BuildSimpleDividerLine($maxWidth, "top")
     
         foreach ($titlePart in ($this.Title -split "\r?\n")) {
-            $leftPad = [Math]::Floor(($maxWidth - $titlePart.Length) / 2)
+            $leftPad = 1  # Left-aligned with 1 space margin
             $rightPad = $maxWidth - $titlePart.Length - $leftPad
             $consoleMenu += "$([Char]0x2502)" + " " * $leftPad + $titlePart + " " * $rightPad + "$([Char]0x2502)"    
         }
-        $consoleMenu += "$([Char]0x251C)" + "$([Char]0x2500)" * $maxWidth + "$([Char]0x2524)"
+        $consoleMenu += $this.BuildDividerLine($lengths, $selectedProperties, "titleEnd", $maxWidth)
         # now add the header using just the properties from $selectedProperties
         $header = "$([Char]0x2502)" + " Nr" + " " * (3) + "$([Char]0x2502)"
     
@@ -241,7 +324,7 @@ Class ConsoleMenu {
             }
         }
         $consoleMenu += $header
-        $consoleMenu += "$([Char]0x251C)" + "$([Char]0x2500)" * $maxWidth + "$([Char]0x2524)"
+        $consoleMenu += $this.BuildDividerLine($lengths, $selectedProperties, "header", $maxWidth)
         # now add the items
         $i = 0
         foreach ($item in $this.Options) {
@@ -251,8 +334,8 @@ Class ConsoleMenu {
             $propertyValues = @{}
             $maxRows = 1
             foreach ($property in $selectedProperties) {
-                if ($this.MaxStringLength -gt 0 -and ($item.$property).Length -gt $this.MaxStringLength) {
-                    [array]$strList = $this.SplitLongString($item.$property, $this.MaxStringLength)
+                if ($effectiveMaxLength -gt 0 -and ($item.$property).Length -gt $effectiveMaxLength) {
+                    [array]$strList = $this.SplitLongString($item.$property, $effectiveMaxLength)
                     $propertyValues[$property] = $strList
                     if ($strList.Count -gt $maxRows) {
                         $maxRows = $strList.Count
@@ -292,11 +375,11 @@ Class ConsoleMenu {
             # Add divider lines between items
             if ($this.AddDevideLines) {
                 if ($i -lt $this.Options.Count) {
-                    $consoleMenu += "$([Char]0x251C)" + "$([char]0x2500)" * $maxWidth + "$([Char]0x2524)"
+                    $consoleMenu += $this.BuildDividerLine($lengths, $selectedProperties, "middle", $maxWidth)
                 }
             }
         }
-        $consoleMenu += "$([char]0x2514)" + "$([Char]0x2500)" * $maxWidth + "$([char]0x2518)"
+        $consoleMenu += $this.BuildDividerLine($lengths, $selectedProperties, "bottom", $maxWidth)
         $consoleMenu += " "
       
         # test if the console window is wide enough to display the menu
@@ -385,8 +468,8 @@ Function Invoke-Gist {
 $Menu = [ConsoleMenu]@{
     Title             = $Title
     Options           = $GistCatalog
-    ExcludeProperties = "Url"  # Optimize for 120-char width
-    MaxStringLength   = 35  # Wrap long descriptions to fit 120 chars
+    ExcludeProperties = "Url"  # Optimize for terminal width
+    MaxStringLength   = 1  # Enable dynamic width calculation (will be overridden)
     AddDevideLines    = $true  # Visual separation between items
     #StopIfWrongWidth  = $true
 }
