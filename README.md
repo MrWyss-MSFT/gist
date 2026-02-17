@@ -29,13 +29,7 @@
 iwr gist.ittips.ch | iex
 ```
 
-#### Dev ⚡danger zone ⚡
-
-```powershell
-iwr gist.ittips.ch/dev | iex
-```
-
-#### Direct script call with gist number
+#### Direct script call with gist number ⚡danger zone ⚡
 
 ```powershell
 iwr gist.ittips.ch/5 | iex
