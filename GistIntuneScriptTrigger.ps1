@@ -14,7 +14,8 @@ $Title = @"
 Version: $Version ($Branch) by https://x.com/MrWyss 
 Source: https://github.com/MrWyss-MSFT/gist
 
-2026-02-06: [NEW] Updated visual style of the menu
+2026-02-19: [Updated] Nr. 10 new Version of Show-SecureBootCerts.ps1
+2026-02-18: [NEW] Updated visual style of the menu
 "@
 
 $GistCatalog = @(
@@ -93,7 +94,7 @@ $GistCatalog = @(
     [ordered] @{
         Name        = "Show-SecureBootCerts"
         Category    = "Windows"
-        Url         = "https://raw.githubusercontent.com/MrWyss-MSFT/SecureBootCerts/bdb72cb12927c674c95ac0a3538c2a9a4dafcdab/Show-SecureBootCerts.ps1"
+        Url         = "https://raw.githubusercontent.com/MrWyss-MSFT/SecureBootCerts/2a6b6902cf0420cf2f35ab69c53ff7e28c3fd789/Show-SecureBootCerts.ps1"
         Description = "Retrieves Secure Boot certificates and related data"
         Author      = "MrWyss-MSFT"
         Elevation   = $true
