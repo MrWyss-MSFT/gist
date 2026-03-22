@@ -1,6 +1,6 @@
 $global:HostVar = $Host
 $Branch = "main"
-$Version = "v0.1.7"
+$Version = "v0.1.8"
 $Title = @"
  ######\  ######\  ######\ ########\                             
 ##  __##\ \_##  _|##  __##\\__##  __|                            
@@ -94,7 +94,7 @@ $GistCatalog = @(
     [ordered] @{
         Name        = "Show-SecureBootCerts"
         Category    = "Windows"
-        Url         = "https://raw.githubusercontent.com/MrWyss-MSFT/SecureBootCerts/abc444187405a5434291e0843b2d803be0919636/Show-SecureBootCerts.ps1"
+        Url         = "https://raw.githubusercontent.com/MrWyss-MSFT/SecureBootCerts/1538d467a92f8d053acd211ba88e81fceebb8329/Show-SecureBootCerts.ps1"
         Description = "Retrieves Secure Boot certificates and related data"
         Author      = "MrWyss-MSFT"
         Elevation   = $true
